@@ -7,16 +7,18 @@ import os
 import torch
 from skel.skel_model import SKEL
 import trimesh
+import math
 
 if __name__ == '__main__':
     
-    device = 'cpu'
+    device = 'cuda'
     gender = 'female'
-    
+    print('starting')
     skel = SKEL(gender=gender).to(device)
 
     # Set parameters to default values (T pose)
     pose = torch.zeros(1, skel.num_q_params).to(device) # (1, 46)
+    pose[0, 22] = math.pi/2
     betas = torch.zeros(1, skel.num_betas).to(device) # (1, 10)
     trans = torch.zeros(1, 3).to(device)
 
