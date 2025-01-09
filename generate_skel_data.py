@@ -16,6 +16,7 @@ import numpy as np
 import pyrender
 from PIL import Image
 import pickle
+from streaming import MDSWriter
 
 remote = "oci://mosaicml-internal-datasets/mosaicml-internal-dataset-multi-image/synthetic-anatomy"
 
