@@ -28,11 +28,15 @@ columns = {
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument("--num_generations", type=int, default=50000)
+    parser.add_argument("--dist_timeout", type=float, default=300.0)
     args = parser.parse_args()
 
 
+    print('getting device')
     device = get_device()
+    print('initting dist')
     dist.initialize_dist(device, args.dist_timeout)
+    print('making writer')
     writer = MDSWriter(out = f'{remote}/rank{dist.get_global_rank()}', compression = "zstd", columns = columns)
     device = f'cuda:{dist.get_local_rank()}'
 
@@ -46,6 +50,7 @@ if __name__ == '__main__':
     
     for sample_id in tqdm(range(start_idx, end_idx)):
         gender = 'female' if np.random.rand() > 0.5 else 'male'
+        print(gender)
 
         correct = np.random.rand() > 0.5
         wrong_pose = pose_limits.keys()[np.random.randint(len(pose_limits.keys()))]
@@ -71,7 +76,7 @@ if __name__ == '__main__':
         # SKEL forward pass
         skel_output = skel(pose, betas, trans)
         skin_trimesh = trimesh.Trimesh(vertices=skel_output.skin_verts.detach().cpu().numpy()[0], faces=skel.skin_f.cpu()) 
-
+        print('trimesh generated')
         mesh = pyrender.Mesh.from_trimesh(skin_trimesh)
         scene = pyrender.Scene()
         scene.add(mesh)
@@ -91,6 +96,8 @@ if __name__ == '__main__':
                                 outerConeAngle=np.pi/3.0)
         scene.add(light, pose=camera_pose)
         r = pyrender.OffscreenRenderer(1000, 1000)
+
+        print('rendered')
 
         color, depth = r.render(scene)
 
