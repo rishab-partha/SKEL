@@ -64,15 +64,15 @@ if __name__ == '__main__':
 
         for i, pose_name in enumerate(pose_param_names):
             if pose_name not in pose_limits:
-                pose[i] = np.pi/2*np.random.rand() - np.pi/4
+                pose[0, i] = np.pi/2*np.random.rand() - np.pi/4
             else:
                 if correct or pose_name != wrong_pose:
-                    pose[i] = (pose_limits[pose_name][1] - pose_limits[pose_name][0]) * np.random.rand() + pose_limits[pose_name][0]
+                    pose[0, i] = (pose_limits[pose_name][1] - pose_limits[pose_name][0]) * np.random.rand() + pose_limits[pose_name][0]
                 else:
                     new_pose = np.random.rand()*2*np.pi - np.pi
                     while new_pose >= pose_limits[pose_name][0] and new_pose <= pose_limits[pose_name][1]:
                         new_pose = np.random.rand()*2*np.pi - np.pi
-                    pose[i] = new_pose
+                    pose[0, i] = new_pose
 
         # SKEL forward pass
         skel_output = skel(pose, betas, trans)
