@@ -54,7 +54,7 @@ if __name__ == '__main__':
         print(gender)
 
         correct = np.random.rand() > 0.5
-        wrong_pose = pose_limits.keys()[np.random.randint(len(pose_limits.keys()))]
+        wrong_pose = list(pose_limits.keys())[np.random.randint(len(pose_limits.keys()))]
         skel = SKEL(gender=gender).to(device)
 
         # Set parameters to default values (T pose)
