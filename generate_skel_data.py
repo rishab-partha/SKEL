@@ -17,6 +17,7 @@ import pyrender
 from PIL import Image
 import pickle
 from streaming import MDSWriter
+from tqdm import tqdm
 
 remote = "oci://mosaicml-internal-datasets/mosaicml-internal-dataset-multi-image/synthetic-anatomy"
 
