@@ -28,6 +28,6 @@ setup(
         "smpl"
     ],
     platforms=["any"],
-    python_requires=">=3.7,<3.11",
+    python_requires=">=3.7,<3.12",
     install_requires=requirements,
 )
