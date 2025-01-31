@@ -19,7 +19,7 @@ import pickle
 from streaming import MDSWriter
 from tqdm import tqdm
 
-remote = "oci://mosaicml-internal-datasets/mosaicml-internal-dataset-multi-image/synthetic-anatomy"
+remote = "oci://mosaicml-internal-datasets/mosaicml-internal-dataset-multi-image/synthetic-anatomy-val"
 
 columns = {
     'images': 'bytes',
@@ -30,6 +30,9 @@ if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument("--num_generations", type=int, default=50000)
     parser.add_argument("--dist_timeout", type=float, default=300.0)
+    parser.add_argument(
+        "--sample_offset", type=int, default=0
+    )
     args = parser.parse_args()
 
 
